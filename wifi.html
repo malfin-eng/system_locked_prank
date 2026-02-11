@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>System Locked</title>
+    <style>
+        /* CSS untuk tema cyber merah dengan animasi matrix rain dan particle */
+        body {
+            background-color: #000000;
+            color: #ff0000;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            animation: backgroundGlow 3s infinite alternate;
+        }
+        @keyframes backgroundGlow {
+            from { box-shadow: inset 0 0 50px #ff0000; }
+            to { box-shadow: inset 0 0 100px #ff4444; }
+        }
+        /* Matrix rain animasi */
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .matrix-rain span {
+            position: absolute;
+            color: #ff0000;
+            font-size: 1em;
+            opacity: 0.8;
+            animation: fall 5s linear infinite;
+        }
+        @keyframes fall {
+            from { top: -10%; opacity: 1; }
+            to { top: 110%; opacity: 0; }
+        }
+        h1 {
+            font-size: 3em;
+            letter-spacing: 0.2em;
+            margin-bottom: 10px;
+            color: #ff0000;
+            animation: subtleGlitch 2s infinite; /* Glitch dikurangi agar tidak terlalu banyak bergerak */
+            text-shadow: 0 0 20px #ff0000;
+        }
+        @keyframes subtleGlitch {
+            0% { transform: translate(0); }
+            50% { transform: translate(1px, -1px); }
+            100% { transform: translate(0); }
+        }
+        p {
+            font-size: 1.1em;
+            margin: 10px 0;
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+        }
+        .countdown {
+            color: #ff4444;
+            font-weight: bold;
+            font-size: 1.5em;
+            text-shadow: 0 0 15px #ff4444;
+            animation: subtlePulse 2s infinite;
+        }
+        @keyframes subtlePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            border: 2px solid #ff0000;
+            border-radius: 5px;
+            width: 250px;
+            margin-top: 15px;
+            background-color: #220000;
+            color: #ff0000;
+            text-align: center;
+            box-shadow: 0 0 15px #ff0000;
+            animation: inputGlow 2s infinite alternate;
+        }
+        @keyframes inputGlow {
+            from { box-shadow: 0 0 15px #ff0000; }
+            to { box-shadow: 0 0 30px #ff4444; }
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 1em;
+            border: 2px solid #ff0000;
+            border-radius: 5px;
+            background-color: #ff0000;
+            color: #ffffff;
+            cursor: pointer;
+            text-shadow: 0 0 10px #ffffff;
+            animation: buttonPulse 2s infinite;
+        }
+        @keyframes buttonPulse {
+            0% { transform: scale(1); box-shadow: 0 0 15px #ff0000; }
+            50% { transform: scale(1.05); box-shadow: 0 0 25px #ff4444; }
+            100% { transform: scale(1); box-shadow: 0 0 15px #ff0000; }
+        }
+        button:hover {
+            background-color: #cc0000;
+        }
+        .progress-bar {
+            width: 300px;
+            height: 10px;
+            border-radius: 5px;
+            background-color: #220000;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            width: 100%;
+            background-color: #ff0000;
+            border-radius: 5px;
+            animation: loading 300s linear forwards;
+            box-shadow: 0 0 15px #ff0000;
+        }
+        @keyframes loading {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        /* Jam analog sebagai animasi scan */
+        .analog-clock {
+            display: none;
+            width: 150px;
+            height: 150px;
+            border: 5px solid #ff0000;
+            border-radius: 50%;
+            margin: 20px auto;
+            position: relative;
+            background-color: #000000;
+            box-shadow: 0 0 20px #ff0000;
+        }
+        .clock-face {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .hour-hand, .minute-hand, .second-hand {
+            position: absolute;
+            background-color: #ff0000;
+            transform-origin: bottom;
+            bottom: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .hour-hand {
+            width: 4px;
+            height: 40px;
+        }
+        .minute-hand {
+            width: 3px;
+            height: 60px;
+        }
+        .second-hand {
+            width: 2px;
+            height: 70px;
+            animation: scanClock 3s linear; /* Animasi scan: jarum detik berputar cepat */
+        }
+        @keyframes scanClock {
+            from { transform: translateX(-50%) rotate(0deg); }
+            to { transform: translateX(-50%) rotate(360deg); }
+        }
+        /* Particle animasi cyber */
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            animation: particleFloat 4s infinite linear;
+        }
+        @keyframes particleFloat {
+            from { top: 100%; opacity: 1; }
+            to { top: 0%; opacity: 0; }
+        }
+        /* Mode hijau setelah unlock */
+        .green-mode {
+            background-color: #000000;
+            color: #00ff00;
+        }
+        .green-mode h1, .green-mode p, .green-mode .countdown {
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00;
+        }
+        .green-mode input, .green-mode button {
+            border-color: #00ff00;
+            background-color: #002200;
+            color: #00ff00;
+            box-shadow: 0 0 20px #00ff00;
+        }
+        .green-mode .progress {
+            background-color: #00ff00;
+            box-shadow: 0 0 20px #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div> <!-- Matrix rain container -->
+    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; animation-delay: 1s;"></div>
+    <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 40%; animation-delay: 3s;"></div>
+    <div class="particle" style="left: 50%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+    <div class="particle" style="left: 70%; animation-delay: 6s;"></div>
+    <div class="particle" style="left: 80%; animation-delay: 7s;"></div>
+    <div class="particle" style="left: 90%; animation-delay: 8s;"></div>
+
+    <h1>SYSTEM LOCKED</h1>
+    <p>Semua file Anda telah DIENKRIPSI!</p>
+    <p>Waktu tersisa: <span id="timer" class="countdown">05:00</span></p>
+
+    <div class="progress-bar">
+        <div class="progress"></div>
+    </div>
+
+    <p>Masukkan kode unlock untuk menghentikan penghapusan otomatis:</p>
+    <input type="text" id="unlockCode" placeholder="Kode unlock" />
+    <button onclick="checkCode()">UNLOCK SYSTEM</button>
+
+    <div class="analog-clock" id="analogClock">
+        <div class="clock-face">
+            <div class="hour-hand"></div>
+            <div class="minute-hand"></div>
+            <div class="second-hand"></div>
+        </div>
+    </div>
+
+    <script>
+        // Matrix rain animasi
+        const matrixRain = document.getElementById('matrixRain');
+        const chars = '01';
+        for (let i = 0; i < 50; i++) {
+            const span = document.createElement('span');
+            span.textContent = chars[Math.floor(Math.random() * chars.length)];
+            span.style.left = Math.random() * 100 + '%';
+            span.style.animationDelay = Math.random() * 5 + 's';
+            matrixRain.appendChild(span);
+        }
+
+        // Waktu countdown (dalam detik) - 300 detik (5 menit)
+        let timeLeft = 300;
+        const timerElement = document.getElementById('timer');
+        const analogClock = document.getElementById('analogClock');
+
+        // Timer sederhana untuk hitung mundur
+        const countdown = setInterval(() => {
+            if(timeLeft <= 0) {
+                clearInterval(countdown);
+                alert('File Anda telah terhapus! (ini hanya prank)');
+            } else {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                timerElement.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+            }
+        }, 1000);
+
+        // Fungsi cek kode unlock dengan jam analog sebagai scan
+        function checkCode() {
+            const input = document.getElementById('unlockCode').value;
+            const correctCode = "modaldong";
+
+            // Tampilkan jam analog dan animasi scan
+            analogClock.style.display = 'block';
+            setTimeout(() => {
+                analogClock.style.display = 'none';
+                if(input === correctCode) {
+                    clearInterval(countdown);
+                    // Ubah semua ke hijau
+                    document.body.classList.add('green-mode');
+                    alert('Sistem berhasil dibuka!');
+                    document.body.innerHTML = '<h1 class="green-mode">SYSTEM UNLOCKED</h1><p class="green-mode">Semua file aman.</p>';
+                } else {
+                    alert('Kode salah, coba lagi!');
+                }
+            }, 3000); // Scan selama 3 detik
+        }
+
+        // Fitur "menjebak" lebih kuat
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        }
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey || event.altKey || event.metaKey) {
+                event.preventDefault();
+            }
+        });
+        window.onbeforeunload = function() {
+            return "Anda tidak bisa keluar tanpa unlock! File Anda akan terhapus.";
+        };
+        window.onblur = function() {
+            alert("Jangan coba keluar! Kembali ke prank.");
+            window.focus();
+            window.location.reload();
+        };
+        setInterval(() => {
+            if (document.hidden) {
+                alert("Halaman ini terkunci! Masukkan password untuk keluar.");
+                window.location.reload();
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
